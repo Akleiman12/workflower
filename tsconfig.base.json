@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@workflower/wf-shared": ["packages/wf-shared/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
