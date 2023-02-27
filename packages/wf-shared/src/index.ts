@@ -1,1 +1,2 @@
-export * from './lib/wf-shared';
+export * from './lib/utils';
+export * from './lib/models/workflow';

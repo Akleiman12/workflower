@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { WorkflowModule } from './workflow/workflow.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { AppService } from './app.service';
       database: 'db',
       entities: [],
       synchronize: true,
-    })
+    }),
+    WorkflowModule
   ],
   controllers: [AppController],
   providers: [AppService],

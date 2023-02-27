@@ -16,7 +16,7 @@ export class WorkflowController {
 
   @Post('create')
   create(@Body() body) {
-    // ...
+    return this.workflowService.create();
   }
 
   @Put(':id')
