@@ -15,6 +15,5 @@ export class WorkflowNode {
 export class Workflow {
     id: number;
     name: string;
-    nodes: WorkflowNode[];
-
+    nodes: WorkflowNode[] | string;
 }

@@ -1,75 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common/exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Workflow, validateWorkflow, WorkflowCreateDTO, WorkflowUpdateDTO } from '@workflower/wf-shared'
 import { Repository } from 'typeorm';
 import { WorkflowEntity } from './workflow.entity';
-import { Workflow, WorkflowNodeTypeEnum } from './workflow.model';
 
 @Injectable()
 export class WorkflowService {
     constructor(
         @InjectRepository(WorkflowEntity)
-        private entityRepository: Repository<WorkflowEntity>
+        private workflowRepository: Repository<WorkflowEntity>
       ) { }
     
     async findAll() {
-        return this.entityRepository.find();
+        return this.workflowRepository.find({ where: { deleted: false }});
     }
 
     async findById(id: number) {
-        return this.entityRepository.findOneBy({ id });
+        const workflow = await this.workflowRepository.findOneBy({ id, deleted: false });
+        if (!workflow) throw new NotFoundException('Workflow not found');
+        return workflow;
     }
 
-    async create(){
-        // ...
+    async create(workflowCreate: WorkflowCreateDTO){
+        const workflow = this.workflowRepository.create({ ...workflowCreate });
+        await validateWorkflow(workflow).catch((e) => {
+            throw new BadRequestException(e.message);
+        });
+        return this.workflowRepository.save(workflow);
     }
 
-    async update(id, updateBody) {
-        // ...
+    async update(id: number, workflowUpdate: WorkflowUpdateDTO) {
+        const workflow = await this.workflowRepository.findOneBy({ id });
+        if (!workflow) throw new NotFoundException('Workflow to update does not exist');
+        return this.workflowRepository.update(id, { ...workflowUpdate });
     }
 
     async delete(id) {
-        // ...
+        const workflow = await this.workflowRepository.findOneBy({ id });
+        if (!workflow) throw new NotFoundException('Workflow to delete does not exist');
+        workflow.deleted = true;
+        return this.workflowRepository.update(id, workflow);
     }
-
-    /**
-     * Validates if:
-     *  - Init and end boxes exist and valid
-     *  - At least one conditional and one action
-     *  - all nodes of workflow are connected to init node
-     */
-    private async validateWorkflow(workflow: Workflow) {
-        const nodesList = workflow.nodes;
-
-        // Only one INIT
-        const initNodeList = nodesList.filter((n) => n.type === WorkflowNodeTypeEnum.INIT);
-        if (initNodeList.length > 1) throw new Error('Workflow has more than one INIT node');
-
-        // Only one END
-        const endNodeList = nodesList.filter((n) => n.type === WorkflowNodeTypeEnum.END);
-        if (endNodeList.length > 1) throw new Error('Workflow has more than one INIT node');
-
-        // INIT has no incoming links
-        const initNode = initNodeList.pop();
-        if (initNode.incomingNodes) throw new Error('INIT can\'t have incomingNodes');
-
-        // END has no outgoing links
-        const endNode = endNodeList.pop();
-        if (endNode.outgoingNodes) throw new Error('END can\'t have outgoingNodes');
-
-        // At least one conditional node
-        const conditionalNode = nodesList.find((n) => n.type === WorkflowNodeTypeEnum.CONDITIONAL);
-        if (!conditionalNode) throw new Error('Missing at least one CONDITIONAL node')
-        
-        // At least one action node
-        const actionNode = nodesList.find((n) => n.type === WorkflowNodeTypeEnum.ACTION);
-        if (!actionNode) throw new Error('Missing at least one ACTION node')
-
-        // All nodes connected to init
-        const nodesDict = nodesList.reduce((dict, n) => dict[n.id] = n, {});
-
-
-
-    }
-
 
 }

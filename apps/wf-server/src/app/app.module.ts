@@ -10,8 +10,9 @@ import { WorkflowModule } from './workflow/workflow.module';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db',
-      entities: [],
+      entities: [__dirname + '/../**/*.entity.{js,ts}'],
       synchronize: true,
+      autoLoadEntities: true
     }),
     WorkflowModule
   ],

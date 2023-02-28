@@ -1,5 +1,5 @@
+import { Workflow } from '@workflower/wf-shared';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { Workflow, WorkflowNode } from './workflow.model';
 
 // Entity defined for sqlite3 table
 @Entity()
@@ -10,7 +10,9 @@ export class WorkflowEntity implements Workflow {
     @Column()
     name: string;
     
-    @Column('json')
-    nodes: WorkflowNode[];
+    @Column()
+    nodes: string;
 
+    @Column('boolean', { default: false })
+    deleted: boolean
 }
