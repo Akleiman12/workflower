@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-
 import { Route, Routes, Link } from 'react-router-dom';
 
 function NavigationMenu() {
@@ -60,10 +57,4 @@ function Router() {
   );
 }
 
-export function App() {
-  return (
-    <Router />
-  );
-}
-
-export default App;
+export default Router;
