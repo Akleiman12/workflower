@@ -1,5 +1,5 @@
 import { Workflow } from '@workflower/wf-shared';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 // Entity defined for sqlite3 table
 @Entity()
@@ -7,7 +7,7 @@ export class WorkflowEntity implements Workflow {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ unique: true })
     name: string;
     
     @Column()
