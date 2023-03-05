@@ -10,7 +10,7 @@ export class WorkflowService {
 
     static getWorkflowById(id: string | number) {
         if (!id) throw Error('No ID provided to get workflow');
-        return axios.get(BASE_URL + '/workflows').then((res) => res.data);
+        return axios.get(BASE_URL + `/workflows/${id}`).then((res) => res.data);
 
     }
 
