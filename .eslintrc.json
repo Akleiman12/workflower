@@ -18,7 +18,8 @@
               }
             ]
           }
-        ]
+        ],
+        "no-restricted-globals": "off"
       }
     },
     {
