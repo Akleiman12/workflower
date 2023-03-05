@@ -1,4 +1,4 @@
-export class WorkflowUpdateDTO {
-    name: string;
-    nodes: string;
+export interface WorkflowUpdateDTO {
+    name?: string;
+    nodes?: string;
 }

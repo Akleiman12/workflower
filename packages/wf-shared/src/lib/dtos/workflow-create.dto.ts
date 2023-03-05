@@ -1,4 +1,4 @@
-export class WorkflowCreateDTO {
+export interface WorkflowCreateDTO {
     name: string;
     nodes: string;
 }
