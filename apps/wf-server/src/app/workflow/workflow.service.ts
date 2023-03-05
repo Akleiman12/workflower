@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { BadRequestException } from '@nestjs/common/exceptions';
+import { BadRequestException, InternalServerErrorException } from '@nestjs/common/exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Workflow, validateWorkflow, WorkflowCreateDTO, WorkflowUpdateDTO } from '@workflower/wf-shared'
 import { Repository } from 'typeorm';
@@ -27,13 +27,23 @@ export class WorkflowService {
         await validateWorkflow(workflow).catch((e) => {
             throw new BadRequestException(e.message);
         });
-        return this.workflowRepository.save(workflow);
+        return this.workflowRepository.save(workflow).catch((e: Error) => {
+            if (e.message.includes('SQLITE_CONSTRAINT: UNIQUE constraint failed')) {
+                throw new BadRequestException(`Name property has to be unique. Another workflow already has the name "${workflowCreate.name}"`);
+            }
+            throw new InternalServerErrorException('Unknown error. Try again later');
+        });
     }
 
     async update(id: number, workflowUpdate: WorkflowUpdateDTO) {
         const workflow = await this.workflowRepository.findOneBy({ id });
         if (!workflow) throw new NotFoundException('Workflow to update does not exist');
-        return this.workflowRepository.update(id, { ...workflowUpdate });
+        return this.workflowRepository.update(id, { ...workflowUpdate }).catch((e: Error) => {
+            if (e.message.includes('SQLITE_CONSTRAINT: UNIQUE constraint failed')) {
+                throw new BadRequestException(`Name property has to be unique. Another workflow already has the name "${workflowUpdate.name}"`);
+            }
+            throw new InternalServerErrorException('Unknown error. Try again later')
+        });;
     }
 
     async delete(id) {
