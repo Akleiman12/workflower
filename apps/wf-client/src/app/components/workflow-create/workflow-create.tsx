@@ -1,10 +1,16 @@
 import { useState, FormEvent, Component, ReactElement } from "react";
 import { baseGraph, calculateIncomingNodes, getFirstAvailableId, validateWorkflow, WorkflowNode, WorkflowNodeTypeEnum } from '@workflower/wf-shared';
 import { WorkflowService } from "../../services/workflow.service";
+import { Tooltip } from 'react-tooltip';
+import { AiOutlineInfoCircle as InfoIcon } from 'react-icons/ai';
+
+import 'react-tooltip/dist/react-tooltip.css'
 
 function WorkflowForm(props: { workflowName: string, nodes: Partial<WorkflowNode>[], onSubmit: (event: FormEvent<HTMLFormElement>) => void }) {
     const { onSubmit } = props;
     const [nodes, setNodes] = useState(props.nodes);
+
+    const tooltipMessage = "Set the IDs of the outgoing nodes, separated by a comma.";
 
     // Function to create the individual form fields for each of the currently existing nodes
     const getNodeForms = (nodes: Partial<WorkflowNode>[]) => {
@@ -15,7 +21,7 @@ function WorkflowForm(props: { workflowName: string, nodes: Partial<WorkflowNode
                     <h4>Node {i + 1}</h4>
                     <label>ID: {node.id}<input name={`node.${node.id}.id`} value={node.id} hidden readOnly/></label><br/>
                     <label>
-                        Outgoing nodes
+                        Outgoing nodes <InfoIcon className="tooltip-icon" data-tooltip-content={tooltipMessage}/>
                         <input name={`node.${node.id}.outgoingNodes`} defaultValue={node.outgoingNodes?.join(',')}/><br/>
                     </label>
                     <label>
@@ -72,6 +78,7 @@ function WorkflowForm(props: { workflowName: string, nodes: Partial<WorkflowNode
         </div>
         <br/>
         <input type="submit" value="Submit" />
+        <Tooltip anchorSelect=".tooltip-icon" />
     </form>
     )
 }
