@@ -2,18 +2,23 @@
 import styles from './app.module.scss';
 
 import { Route, Routes, Link } from 'react-router-dom';
+import { WorkflowList } from './components/workflow-list/workflow-list';
+import { WorkflowUpdate } from './components/workflow-update/workflow-update';
+import { WorkflowCreate } from './components/workflow-create/workflow-create';
 
 function NavigationMenu() {
     return (
-        <div role="navigation">
+      <div role="navigation">
+        <hr/>
         <ul>
           <button>
             <Link to="/">Workflows List</Link>
           </button>
           <button>
-            <Link to="/create">Create a workflow</Link>
+            <Link to="/create">Create Workflow</Link>
           </button>
         </ul>
+        <hr/>
       </div>
     )
 }
@@ -24,25 +29,19 @@ function AppRoutes() {
             <Route
             path="/"
             element={
-                <div>
-                    This is the list of workflows
-                </div>
+                <WorkflowList />
             }
             />
             <Route
             path="/create"
             element={
-                <div>
-                    This is the "Create Workflow" view
-                </div>
+                <WorkflowCreate />
             }
             />
             <Route
-            path="/update"
+            path="/update/:workflowId"
             element={
-                <div>
-                    This is the "Create Workflow" view
-                </div>
+                <WorkflowUpdate />
             }
             />
         </Routes>
@@ -52,17 +51,18 @@ function AppRoutes() {
 function Router() {
   return (
     <>
-      {/* START: routes */}
       <NavigationMenu />
       <AppRoutes />
-      {/* END: routes */}
     </>
   );
 }
 
 export function App() {
   return (
-    <Router />
+    <>
+      <h1>Workflower</h1>
+      <Router />
+    </>
   );
 }
 
