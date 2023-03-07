@@ -23,7 +23,12 @@ export class WorkflowService {
     }
 
     async create(workflowCreate: WorkflowCreateDTO){
-        const workflow = this.workflowRepository.create({ ...workflowCreate });
+
+
+        const workflow = this.workflowRepository.create({
+            name: workflowCreate.name.trim(),
+            nodes: workflowCreate.nodes
+        });
         await validateWorkflow(workflow).catch((e) => {
             throw new BadRequestException(e.message);
         });
@@ -38,7 +43,10 @@ export class WorkflowService {
     async update(id: number, workflowUpdate: WorkflowUpdateDTO) {
         const workflow = await this.workflowRepository.findOneBy({ id });
         if (!workflow) throw new NotFoundException('Workflow to update does not exist');
-        return this.workflowRepository.update(id, { ...workflowUpdate }).catch((e: Error) => {
+        return this.workflowRepository.update(id, {
+            name: workflowUpdate.name.trim() || workflow.name,
+            nodes: workflowUpdate.nodes || workflow.nodes
+        }).catch((e: Error) => {
             if (e.message.includes('SQLITE_CONSTRAINT: UNIQUE constraint failed')) {
                 throw new BadRequestException(`Name property has to be unique. Another workflow already has the name "${workflowUpdate.name}"`);
             }

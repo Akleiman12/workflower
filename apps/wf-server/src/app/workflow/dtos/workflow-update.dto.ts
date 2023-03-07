@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNotEmptyObject, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { WorkflowUpdateDTO as WorkflowUpdateBaseDTO} from "@workflower/wf-shared";
 
 
