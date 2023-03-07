@@ -1,16 +1,20 @@
-import { WorkflowCreateDTO, WorkflowNode, WorkflowUpdateDTO } from '@workflower/wf-shared';
+import { Workflow, WorkflowCreateDTO, WorkflowNode, WorkflowUpdateDTO } from '@workflower/wf-shared';
 import axios from 'axios';
 
 const BASE_URL = process.env.NX_SERVER_URL;
 export class WorkflowService {
 
-    static async getWorkflows() {
+    static async getWorkflows(): Promise<Workflow[]> {
         return axios.get(BASE_URL + '/workflows').then((res) => res.data);
     }
 
-    static getWorkflowById(id: string | number) {
+    static getWorkflowById(id: string | number): Promise<Workflow> {
         if (!id) throw Error('No ID provided to get workflow');
-        return axios.get(BASE_URL + `/workflows/${id}`).then((res) => res.data);
+        return axios.get(BASE_URL + `/workflows/${id}`).then((res) => {
+            const workflowData = res.data;
+            workflowData.nodes = JSON.parse(workflowData.nodes);
+            return workflowData as Workflow;
+        });
 
     }
 

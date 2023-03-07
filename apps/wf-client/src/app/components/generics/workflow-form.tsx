@@ -7,7 +7,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 
 
 export function WorkflowForm(props: { workflowName: string, nodes: Partial<WorkflowNode>[], onSubmit: (event: FormEvent<HTMLFormElement>) => void }) {
-    const { onSubmit } = props;
+    const { onSubmit, workflowName } = props;
     const [nodes, setNodes] = useState(props.nodes);
 
     const tooltipMessage = "Set the IDs of the outgoing nodes, separated by a comma.";
@@ -64,7 +64,7 @@ export function WorkflowForm(props: { workflowName: string, nodes: Partial<Workf
         <form method="post" onSubmit={onSubmit}>
         <label>
             Name:
-            <input required={true} name="name" type="text" />
+            <input required={true} name="name" type="text" defaultValue={workflowName}/>
         </label>
         <br/>
         <div>
