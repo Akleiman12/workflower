@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-
 import { Route, Routes, Link } from 'react-router-dom';
 import { WorkflowList } from './components/workflow-list/workflow-list';
 import { WorkflowUpdate } from './components/workflow-update/workflow-update';
@@ -10,14 +7,14 @@ function NavigationMenu() {
     return (
       <div role="navigation">
         <hr/>
-        <ul>
+        <div className='navigation'>
           <button>
             <Link to="/">Workflows List</Link>
           </button>
           <button>
             <Link to="/create">Create Workflow</Link>
           </button>
-        </ul>
+        </div>
         <hr/>
       </div>
     )
