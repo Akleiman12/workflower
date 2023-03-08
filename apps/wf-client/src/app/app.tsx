@@ -7,14 +7,14 @@ function NavigationMenu() {
     return (
       <div role="navigation">
         <hr/>
-        <ul>
+        <div className='navigation'>
           <button>
             <Link to="/">Workflows List</Link>
           </button>
           <button>
             <Link to="/create">Create Workflow</Link>
           </button>
-        </ul>
+        </div>
         <hr/>
       </div>
     )

@@ -17,24 +17,22 @@ export function WorkflowForm(props: { workflowName: string, nodes: Partial<Workf
         const inputs: ReactElement[] = [];
         for(const [i, node] of nodes.entries()) {
             inputs.push(
-                <div key={node.id}>
+                <div key={node.id} className='form-block'>
                     <h4>Node {i + 1}</h4>
-                    <label>ID: {node.id}<input name={`node.${node.id}.id`} value={node.id} hidden readOnly/></label><br/>
-                    <label>
-                        Outgoing nodes <InfoIcon className="tooltip-icon" data-tooltip-content={tooltipMessage}/>
-                        <input name={`node.${node.id}.outgoingNodes`} defaultValue={node.outgoingNodes?.join(',')}/><br/>
-                    </label>
-                    <label>
-                        Type:
-                        <select required={true} name={`node.${node.id}.type`} defaultValue={node.type} >
-                            <option value={undefined}>Select one</option>
-                            <option value={WorkflowNodeTypeEnum.INIT}>Init</option>
-                            <option value={WorkflowNodeTypeEnum.ACTION}>Action</option>
-                            <option value={WorkflowNodeTypeEnum.CONDITIONAL}>Conditional</option>
-                            <option value={WorkflowNodeTypeEnum.END}>End</option>
-                        </select><br/>
-                    </label>
-                    <button type="button" onClick={() => removeNode(i)}>Remove node</button>
+                    <label>ID: {node.id}</label>
+                    <input name={`node.${node.id}.id`} value={node.id} hidden readOnly/>
+                    <label>Outgoing nodes <InfoIcon className="tooltip-icon" data-tooltip-content={tooltipMessage}/></label>
+                    <input name={`node.${node.id}.outgoingNodes`} defaultValue={node.outgoingNodes?.join(',')}/>
+                    <label>Type:</label>
+                    <select required={true} name={`node.${node.id}.type`} defaultValue={node.type} >
+                        <option value={undefined}>Select one</option>
+                        <option value={WorkflowNodeTypeEnum.INIT}>Init</option>
+                        <option value={WorkflowNodeTypeEnum.ACTION}>Action</option>
+                        <option value={WorkflowNodeTypeEnum.CONDITIONAL}>Conditional</option>
+                        <option value={WorkflowNodeTypeEnum.END}>End</option>
+                    </select>
+                    <br/>
+                    <button className="remove-button" type="button" onClick={() => removeNode(i)}>Remove node</button>
                 </div>
             );
         }
@@ -62,22 +60,13 @@ export function WorkflowForm(props: { workflowName: string, nodes: Partial<Workf
 
     return(
         <form method="post" onSubmit={onSubmit}>
-        <label>
-            Name:
-            <input required={true} name="name" type="text" defaultValue={workflowName}/>
-        </label>
+        <label>Name:</label>
+        <input required={true} name="name" type="text" defaultValue={workflowName}/>
+        <h3>Nodes:</h3>
+        {getNodeForms(nodes)}
         <br/>
-        <div>
-            <h3>Nodes:</h3>
-            { /* Start of nodes form, later to be abstracted */}
-            <div className="nodeForm">
-                {getNodeForms(nodes)}
-                <br/>
-                <button type="button" onClick={addNode}>Add Node</button>
-            </div>
-        </div>
-        <br/>
-        <input type="submit" value="Submit" />
+        <button className="add-button" type="button" onClick={addNode}>Add Node</button><br/>
+        <input className="submit-button" type="submit" value="Submit" />
         <Tooltip anchorSelect=".tooltip-icon" />
     </form>
     )

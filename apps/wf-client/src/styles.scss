@@ -1,1 +1,95 @@
 /* You can add global styles to this file, and also import other style files */
+
+// Navigation
+.navigation {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    button {
+        margin: 1px 5px;
+        padding: 0;
+        height: fit-content;
+        width: fit-content;
+        a {
+            box-sizing: border-box;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;            
+            text-decoration: none;
+            height: 100%;
+            width: 100%;
+            min-width: 120px;
+            &:visited, &:hover, &:active {
+                color: inherit;
+            }
+        }
+    }
+}
+
+// List View
+.workflow-table {
+    width: 75%;
+    margin: auto;
+    thead {
+        background-color: #b5ebff
+    }
+    tbody tr:nth-child(even){
+        background-color: #e0f3fa;
+    }
+    td:not(:first-child) {
+        padding:10px 0;
+    }
+    td:first-child {
+        padding-left: 10px;
+    }
+    .table-options {
+        width: 25%;
+        text-align: center;
+
+        button {
+            margin: 0 5px;
+            a {
+                text-decoration: none;
+                &:visited, &:hover, &:active {
+                    color: inherit;
+                }
+            }
+        }
+    }
+}
+
+// Workflow form
+form {
+    margin: auto;
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 200px 300px;
+    row-gap: 5px;
+
+    .form-block {
+        padding: 0 1px 5px 1px;
+        grid-column: 1 / 3;
+        background-color: lightgray;
+        width: fit-content;
+        display: grid;
+        grid-template-columns: 200px 300px;
+        row-gap: 5px;
+    }
+
+    label, button, h4 {
+        grid-column: 1 / 2;
+    }
+    .remove-button {
+        width: 125px
+    }
+    input,
+    select {
+        grid-column: 2 / 3;
+    }
+
+    .add-button, .submit-button {
+        grid-column: 2 / 3;
+    }
+}

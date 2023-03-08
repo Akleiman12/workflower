@@ -17,7 +17,7 @@ export class WorkflowList extends React.Component<object, { workflowsList: Array
             renderList.push((
                 <tr key={node.name}>
                     <td>{node.name}</td>
-                    <td><button><Link to={`/update/${node.id}`}>Edit</Link></button><button onClick={() => this.deleteWorkflow(node.id)}>Delete</button></td>
+                    <td className="table-options"><button><Link to={`/update/${node.id}`}>Edit</Link></button><button onClick={() => this.deleteWorkflow(node.id)}>Delete</button></td>
                 </tr>
             ));
         }
@@ -44,11 +44,11 @@ export class WorkflowList extends React.Component<object, { workflowsList: Array
         return (
             <> 
             <h2>Workflows List</h2>
-                <table>
+                <table className="workflow-table">
                     <thead>
                         <tr>
                             <th>Workflow</th>
-                            <th>Options</th>
+                            <th className="table-options">Options</th>
                         </tr>
                     </thead>
                     <tbody>
