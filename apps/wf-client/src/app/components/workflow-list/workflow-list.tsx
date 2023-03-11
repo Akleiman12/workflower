@@ -1,23 +1,32 @@
-import { Workflow } from "@workflower/wf-shared";
+import { Workflow, WorkflowNode } from "@workflower/wf-shared";
 import React from "react";
 import { Link } from "react-router-dom";
 import { WorkflowService } from "../../services/workflow.service";
+import { WorkflowGrapher } from "../generics/workflow-grapher";
+import { HiMagnifyingGlass } from "react-icons/hi2"
 
-export class WorkflowList extends React.Component<object, { workflowsList: Array<Workflow> }> {
+export class WorkflowList extends React.Component<object, { workflowsList: Array<Workflow>, selected: Workflow | null }> {
     constructor(props: object) {
         super(props);
         this.state = {
-            workflowsList: []
+            workflowsList: [],
+            selected: null
         }
     }
 
     renderList(list: Array<Workflow> = []) {
         const renderList = [];
-        for(const node of list) {
+        for(const workflow of list) {
             renderList.push((
-                <tr key={node.name}>
-                    <td>{node.name}</td>
-                    <td className="table-options"><button><Link to={`/update/${node.id}`}>Edit</Link></button><button onClick={() => this.deleteWorkflow(node.id)}>Delete</button></td>
+                <tr key={workflow.name}>
+                    <td>{workflow.name}</td>
+                    <td className="table-options">
+                        <button onClick={() => this.setState({ selected: { ...workflow } })}><HiMagnifyingGlass/></button>
+                        <button>
+                            <Link to={`/update/${workflow.id}`}>Edit</Link>
+                        </button>
+                        <button onClick={() => this.deleteWorkflow(workflow.id)}>Delete</button>
+                    </td>
                 </tr>
             ));
         }
@@ -26,7 +35,6 @@ export class WorkflowList extends React.Component<object, { workflowsList: Array
 
     async componentDidMount() {
         const list: Array<Workflow> = await WorkflowService.getWorkflows();
-        console.log('list', list)
         this.setState({
             workflowsList: list
         })
@@ -37,6 +45,21 @@ export class WorkflowList extends React.Component<object, { workflowsList: Array
         if (result) {
             await WorkflowService.deleteWorkflow(id);
             window.location.reload();
+        }
+    }
+
+    showWorkflowGraph() {
+        if(this.state.selected) {
+            return (
+                <>
+                    <h3>Showing workflow: { this.state.selected.name }</h3>
+                    <WorkflowGrapher workflow={this.state.selected}></WorkflowGrapher>
+                </>
+            )
+        } else {
+            return (
+                <h3>Select a workflow to show its graph</h3>
+            )
         }
     }
 
@@ -55,6 +78,8 @@ export class WorkflowList extends React.Component<object, { workflowsList: Array
                         { this.renderList(this.state.workflowsList)}
                     </tbody>
                 </table>
+                <br/>
+                { this.showWorkflowGraph()}
             </>
         )
     }

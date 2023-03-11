@@ -50,6 +50,7 @@
 
         button {
             margin: 0 5px;
+            height: 20px;
             a {
                 text-decoration: none;
                 &:visited, &:hover, &:active {
@@ -92,4 +93,12 @@ form {
     .add-button, .submit-button {
         grid-column: 2 / 3;
     }
+}
+
+// Workflow Grapher
+.graph {
+    margin-top: 10px;
+    height: 300px;
+    width: 100vw;
+    border: 1px black solid;
 }

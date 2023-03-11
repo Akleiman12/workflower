@@ -20,8 +20,6 @@ class WorkflowUpdate extends React.Component<{ workflowId: string | undefined },
         const workflowData = await WorkflowService.getWorkflowById(this.state.workflowId);
         if (typeof workflowData.nodes === 'string') throw new Error('Malformed workflow. Nodes have to be instances of WorkflowNode');
 
-        console.log(workflowData)
-
         this.setState({
             name: workflowData.name,
             nodes: workflowData.nodes,
