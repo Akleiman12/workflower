@@ -3,6 +3,9 @@ import { WorkflowList } from './components/workflow-list/workflow-list';
 import { WorkflowUpdate } from './components/workflow-update/workflow-update';
 import { WorkflowCreate } from './components/workflow-create/workflow-create';
 
+/**
+ * Navigation Menu visual component
+ */
 function NavigationMenu() {
     return (
       <div role="navigation">
@@ -20,6 +23,9 @@ function NavigationMenu() {
     )
 }
 
+/**
+ * Function to define routes inside the application
+ **/
 function AppRoutes() {
     return (
         <Routes>
@@ -45,6 +51,9 @@ function AppRoutes() {
     )
 }
 
+/**
+ * Function to put together navigation menu and routes
+ */
 function Router() {
   return (
     <>
@@ -54,6 +63,9 @@ function Router() {
   );
 }
 
+/**
+ * Main application entrypoint
+ */
 export function App() {
   return (
     <>

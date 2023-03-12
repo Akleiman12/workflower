@@ -2,6 +2,10 @@ import { Workflow, WorkflowCreateDTO, WorkflowNode, WorkflowUpdateDTO } from '@w
 import axios from 'axios';
 
 const BASE_URL = process.env.NX_SERVER_URL;
+
+/**
+ * Collection of functions to comunicate with server
+ */
 export class WorkflowService {
 
     static async getWorkflows(): Promise<Workflow[]> {
@@ -49,7 +53,7 @@ export class WorkflowService {
     }
 
     static deleteWorkflow(id: string | number) {
-        if (!id) throw Error('No ID provided to get workflow');
+        if (!id) throw Error('No ID provided to delete workflow');
         return axios.delete(BASE_URL + `/workflows/${id}`).then((res) => res.data).catch((e) => {
             throw e.response.data;
         });

@@ -1,10 +1,13 @@
-import { Workflow, WorkflowNode } from "@workflower/wf-shared";
+import { Workflow } from "@workflower/wf-shared";
 import React from "react";
 import { Link } from "react-router-dom";
 import { WorkflowService } from "../../services/workflow.service";
 import { WorkflowGrapher } from "../generics/workflow-grapher";
 import { HiMagnifyingGlass } from "react-icons/hi2"
 
+/**
+ * Component for Workflow List view
+ */
 export class WorkflowList extends React.Component<object, { workflowsList: Array<Workflow>, selected: Workflow | null }> {
     constructor(props: object) {
         super(props);
@@ -15,6 +18,9 @@ export class WorkflowList extends React.Component<object, { workflowsList: Array
     }
 
     renderList(list: Array<Workflow> = []) {
+        if(list.length === 0) {
+            return (<tr>No workflows yet.</tr>)
+        }
         const renderList = [];
         for(const workflow of list) {
             renderList.push((

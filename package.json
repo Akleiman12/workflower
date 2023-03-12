@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "client:serve:dev": "npx env-cmd -f apps/wf-client/.env.dev nx run wf-client:serve:dev",
+    "client:serve:dev": "npx env-cmd -f apps/wf-client/.env.dev nx run wf-client:serve:development",
     "client:serve:prod": "npx env-cmd -f apps/wf-client/.env.prod nx run wf-client:serve:production",
-    "server:serve:dev": "npx env-cmd -f apps/wf-server/.env.dev nx run wf-server:serve:dev",
+    "server:serve:dev": "npx env-cmd -f apps/wf-server/.env.dev nx run wf-server:serve:development",
     "server:serve:prod": "npx env-cmd -f apps/wf-server/.env.prod nx run wf-server:serve:production",
-    "client:build:dev": "npx env-cmd -f apps/wf-client/.env.dev nx run wf-client:build:dev",
+    "client:build:dev": "npx env-cmd -f apps/wf-client/.env.dev nx run wf-client:build:development",
     "client:build:prod": "npx env-cmd -f apps/wf-client/.env.prod nx run wf-client:build:production",
-    "server:build:dev": "npx env-cmd -f apps/wf-server/.env.dev nx run wf-server:build:dev",
+    "server:build:dev": "npx env-cmd -f apps/wf-server/.env.dev nx run wf-server:build:development",
     "server:build:prod": "npx env-cmd -f apps/wf-server/.env.prod nx run wf-server:build:production"
   },
   "private": true,
