@@ -10,6 +10,9 @@ const NodeShapeArray = ['ellipse', 'ellipse', 'diamond', 'rectangle'];
 // Set node color in graph depending on WorkflowNode.type
 const NodeColorArray = ['lightgreen', 'pink', 'lightblue', 'yellow']
 
+/**
+ * Functional component to generate a visual representation of a workflow (Graph)
+ */
 export class WorkflowGrapher extends React.Component<{ workflow: Workflow }, { workflow: Workflow, elements: ElementDefinition[], stylesheet: Stylesheet[],  error: Error | null}> {
 
     // Options for graph positioning of nodes on render
@@ -56,8 +59,6 @@ export class WorkflowGrapher extends React.Component<{ workflow: Workflow }, { w
 
     /**
      * Create all graph elements (Nodes and Edges) with their respective styles
-     * @param workflow 
-     * @returns { elements: ElementDefinition[], stylesheet: Stylesheet[] }
      */
     createGraph(workflow: Workflow) {
         const nodesOrString = workflow.nodes;

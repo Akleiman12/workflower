@@ -103,6 +103,10 @@ export async function validateWorkflow(workflow: Partial<Workflow>): Promise<voi
     if (!result) throw new Error('Graph is invalid. Not all nodes are reachable from init.');
 }
 
+/**
+ * Calculates incomingNode array for each node in the given list out of the outgoingNodes.
+ * @param nodes Incomplete nodes
+ */
 export function calculateIncomingNodes(nodes: Partial<WorkflowNode>[]): WorkflowNode[] {
     // Map => id , incomingNodes for the given id
     const incomingNodesDict: Map<number, number[]> = new Map();
@@ -135,7 +139,9 @@ export function calculateIncomingNodes(nodes: Partial<WorkflowNode>[]): Workflow
 
     return nodesCopy as WorkflowNode[];
 }
-
+/**
+ * Given a list of WorkflowNodes, returns a number that represents the lowest value for an ID that is not used yet
+ */
 export function getFirstAvailableId(nodes: Partial<WorkflowNode>[]) {
     let availableId = 0;
     const usedIds = nodes.map((node) => node.id);

@@ -5,14 +5,18 @@ import { getFirstAvailableId, WorkflowNode, WorkflowNodeTypeEnum } from '@workfl
 
 import 'react-tooltip/dist/react-tooltip.css'
 
-
+/**
+ * Functional component for generating a form to create or edit a workflow
+ */
 export function WorkflowForm(props: { workflowName: string, nodes: Partial<WorkflowNode>[], onSubmit: (event: FormEvent<HTMLFormElement>) => void }) {
     const { onSubmit, workflowName } = props;
     const [nodes, setNodes] = useState(props.nodes);
 
     const tooltipMessage = "Set the IDs of the outgoing nodes, separated by a comma.";
 
-    // Function to create the individual form fields for each of the currently existing nodes
+    /** 
+     * Function to create the individual form fields for each of the currently existing nodes
+     **/
     const getNodeForms = (nodes: Partial<WorkflowNode>[]) => {
         const inputs: ReactElement[] = [];
         for(const [i, node] of nodes.entries()) {
@@ -39,7 +43,9 @@ export function WorkflowForm(props: { workflowName: string, nodes: Partial<Workf
         return inputs;
     }
 
-    // Function to add a node at the end of the list
+    /**
+     * Function to add a node at the end of the list
+     */
     const addNode = () => {
         const newNode = {
             id: getFirstAvailableId(nodes),
@@ -51,7 +57,9 @@ export function WorkflowForm(props: { workflowName: string, nodes: Partial<Workf
         setNodes(newNodesList);
     }
 
-    // Function to remove the selected node from the list
+    /**
+     * Function to remove the selected node from the list
+     **/
     const removeNode = (i: number) => {
         const newNodesList = nodes.slice();
         newNodesList.splice(i, 1);

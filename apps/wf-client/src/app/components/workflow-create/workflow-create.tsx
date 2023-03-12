@@ -3,6 +3,9 @@ import { baseGraph, calculateIncomingNodes, validateWorkflow, WorkflowNode } fro
 import { WorkflowService } from "../../services/workflow.service";
 import { WorkflowForm } from "../generics/workflow-form";
 
+/**
+ * Component for Workflow Create view
+ */
 export class WorkflowCreate extends Component<object, { name: string, nodes: WorkflowNode[], error: null | Error }> {
     constructor(props: object) {
         super(props);

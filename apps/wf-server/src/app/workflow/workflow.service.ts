@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BadRequestException, InternalServerErrorException } from '@nestjs/common/exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Workflow, validateWorkflow, WorkflowCreateDTO, WorkflowUpdateDTO } from '@workflower/wf-shared'
+import { validateWorkflow, WorkflowCreateDTO, WorkflowUpdateDTO } from '@workflower/wf-shared'
 import { Repository } from 'typeorm';
 import { WorkflowEntity } from './workflow.entity';
 
@@ -12,16 +12,25 @@ export class WorkflowService {
         private workflowRepository: Repository<WorkflowEntity>
       ) { }
     
+    /**
+     * Get All workflows
+     */
     async findAll() {
         return this.workflowRepository.find({ where: { deleted: false }});
     }
 
+    /**
+     * Get a workflow by ID
+     */
     async findById(id: number) {
         const workflow = await this.workflowRepository.findOneBy({ id, deleted: false });
         if (!workflow) throw new NotFoundException('Workflow not found');
         return workflow;
     }
 
+    /**
+     * Create a workflow
+     */
     async create(workflowCreate: WorkflowCreateDTO){
 
 
@@ -40,6 +49,9 @@ export class WorkflowService {
         });
     }
 
+    /**
+     * Update a workflow data
+     */
     async update(id: number, workflowUpdate: WorkflowUpdateDTO) {
         const workflow = await this.workflowRepository.findOneBy({ id });
         if (!workflow) throw new NotFoundException('Workflow to update does not exist');
@@ -54,6 +66,9 @@ export class WorkflowService {
         });;
     }
 
+    /**
+     * Set a workflow as deleted. Doesn't actually delete a workflow, just sets the value of 'deleted' to true
+     */
     async delete(id) {
         const workflow = await this.workflowRepository.findOneBy({ id });
         if (!workflow) throw new NotFoundException('Workflow to delete does not exist');

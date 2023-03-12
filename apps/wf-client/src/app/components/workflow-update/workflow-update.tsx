@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { WorkflowService } from "../../services/workflow.service";
 import { WorkflowForm } from "../generics/workflow-form";
 
+/**
+ * Component for Workflow Update view
+ */
 class WorkflowUpdate extends React.Component<{ workflowId: string | undefined }, { workflowId: string, name: string, nodes: WorkflowNode[], loaded: boolean, error: Error | null }> {
     constructor(props: { workflowId: string | undefined }) {
         super(props);
